@@ -1,0 +1,21 @@
+---
+# tasks file for hnakamur.anyenv
+- git: repo="{{ anyenv_git_url }}" dest="{{ anyenv_install_dir }}"
+
+- template: src=anyenv.rc.j2 dest={{ zsh_custom_dir }}/anyenv.zsh
+
+- shell: >
+    eval "$(anyenv init -)";
+    anyenv install {{ item }}
+    creates={{ anyenv_install_dir }}/envs/{{ item }}
+  environment:
+    PATH: "{{ anyenv_install_dir }}/bin:{{ lookup('env', 'PATH') }}"
+  with_items:
+    - rbenv
+    - ndenv
+
+- include: rbenv-version.yml
+  when: anyenv_rbenv_version != ""
+
+- include: ndenv-version.yml
+  when: anyenv_ndenv_version != ""

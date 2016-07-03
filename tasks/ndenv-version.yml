@@ -1,0 +1,12 @@
+---
+- include: env-version.yml anyenv_env_name=ndenv anyenv_env_version={{ anyenv_ndenv_version }}
+
+- npm: name={{ item }} global=yes executable={{ anyenv_install_dir }}/envs/ndenv/shims/npm
+  register: anyenv_node_packages_installed
+  with_items: anyenv_ndenv_global_packages
+
+- shell: >
+    "{{ anyenv_install_dir | replace('~', '$HOME') }}/envs/ndenv/bin/ndenv" rehash
+  when: anyenv_node_packages_installed|changed
+
+- lineinfile: dest=~/.npmrc state=present create=yes line="init.license={{ anyenv_npm_default_license }}"
