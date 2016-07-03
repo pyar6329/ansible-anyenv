@@ -9,7 +9,7 @@
 # NOTE: We must set user_install=no to install gems to the directory under rbenv.
 - gem: name={{ item }} state=latest user_install=no executable="{{ anyenv_install_dir }}/envs/rbenv/shims/gem"
   register: anyenv_gem_installed
-  with_items: anyenv_rbenv_global_gems
+  with_items: anyenv_rbenv_global_packages
 
 - shell: >
     "{{ anyenv_install_dir | replace('~', '$HOME') }}/envs/rbenv/bin/rbenv" rehash

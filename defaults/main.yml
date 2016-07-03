@@ -3,16 +3,15 @@
 anyenv_git_url: https://github.com/riywo/anyenv
 anyenv_install_dir: ~/.anyenv
 
-anyenv_rbenv_version: 2.1.2
-anyenv_rbenv_global_gems:
+anyenv_rbenv_version: 2.3.1
+anyenv_rbenv_global_packages:
   - bundler
-  - compass
 
-anyenv_ndenv_version: v0.10.31
-anyenv_ndenv_global_packages:
-  - grunt-cli
-  - gulp
-  - webpack
-  - karma-cli
+anyenv_ndenv_version: v6.2.2
+anyenv_ndenv_global_packages: []
 
 anyenv_npm_default_license: MIT
+
+anyenv_pyenv_version: 3.5.2
+anyenv_pyenv_global_packages:
+  - pip-tools

@@ -13,9 +13,13 @@
   with_items:
     - rbenv
     - ndenv
+    - pyenv
 
 - include: rbenv-version.yml
   when: anyenv_rbenv_version != ""
 
 - include: ndenv-version.yml
   when: anyenv_ndenv_version != ""
+
+- include: pyenv-version.yml
+  when: anyenv_pyenv_version != ""
