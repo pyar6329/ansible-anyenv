@@ -10,9 +10,9 @@ galaxy_info:
     - xenial # 16.04
   categories:
   - development
-galaxy_tags:
-  - anyenv
-  - pyenv
-  - rbenv
-  - ndenv
+  galaxy_tags:
+    - anyenv
+    - pyenv
+    - rbenv
+    - ndenv
 dependencies: []
