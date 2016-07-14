@@ -1,0 +1,15 @@
+- homebrew: name={{ item }} state=latest
+  with_items:
+    - readline
+    - openssl
+
+- include: >
+    env-version.yml anyenv_env_name=pyenv anyenv_env_version={{ anyenv_pyenv_version }}
+
+- pip: name={{ item }} state=present executable="{{ anyenv_install_dir }}/envs/pyenv/shims/pip"
+  register: anyenv_pip_installed
+  with_items: anyenv_pyenv_global_packages
+
+- shell: >
+    "{{ anyenv_install_dir | replace('~', '$HOME') }}/envs/pyenv/bin/pyenv" rehash
+  when: anyenv_pip_installed|changed
