@@ -4,13 +4,13 @@
     - openssl
 
 - include: >
-    env-version.yml anyenv_env_name=rbenv anyenv_env_version={{ anyenv_rbenv_version }}
+    env-version.yml anyenv_env_name=rbenv anyenv_env_version={{ rbenv.version }}
 
 # NOTE: We must set user_install=no to install gems to the directory under rbenv.
-- gem: name={{ item }} state=latest user_install=no executable="{{ anyenv_install_dir }}/envs/rbenv/shims/gem"
+- gem: name={{ item }} state=latest user_install=no executable="{{ anyenv.install_dir }}/envs/rbenv/shims/gem"
   register: anyenv_gem_installed
-  with_items: anyenv_rbenv_global_packages
+  with_items: rbenv.global_packages
 
 - shell: >
-    "{{ anyenv_install_dir | replace('~', '$HOME') }}/envs/rbenv/bin/rbenv" rehash
+    "{{ anyenv.install_dir | replace('~', '$HOME') }}/envs/rbenv/bin/rbenv" rehash
   when: anyenv_gem_installed|changed

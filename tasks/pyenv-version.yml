@@ -4,12 +4,12 @@
     - openssl
 
 - include: >
-    env-version.yml anyenv_env_name=pyenv anyenv_env_version={{ anyenv_pyenv_version }}
+    env-version.yml anyenv_env_name=pyenv anyenv_env_version={{ pyenv.version }}
 
-- pip: name={{ item }} state=present executable="{{ anyenv_install_dir }}/envs/pyenv/shims/pip"
+- pip: name={{ item }} state=present executable="{{ anyenv.install_dir }}/envs/pyenv/shims/pip"
   register: anyenv_pip_installed
-  with_items: anyenv_pyenv_global_packages
+  with_items: pyenv.global_packages
 
 - shell: >
-    "{{ anyenv_install_dir | replace('~', '$HOME') }}/envs/pyenv/bin/pyenv" rehash
+    "{{ anyenv.install_dir | replace('~', '$HOME') }}/envs/pyenv/bin/pyenv" rehash
   when: anyenv_pip_installed|changed

@@ -6,53 +6,44 @@ An Ansible role to install anyenv
 Requirements
 ------------
 
-### Update homebrew manually beforehand
-
-You need to update homebrew in advance with the following task.
-
-```
-- homebrew: update_homebrew=yes
-```
-
-### Restart the shell after running this playbook
-
-The directory specified zsh_custom_dir must be created by running hnakamur.oh-my-zsh.
-The zsh config file `anyenv` will be added to the directory.
-
-To load this `anyenv` file, you must run the following command in the shell.
-
-```
-exec $SHELL -l
-```
+Restart the shell after running this playbook
 
 Role Variables
 --------------
 
-- anyenv_git_url: https://github.com/riywo/anyenv
+- anyenv.git_url: https://github.com/riywo/anyenv
     - The url of the anyenv git repository.
-- anyenv_install_dir: ~/.anyenv
+- anyenv.install_dir: ~/.anyenv
     - The install directory.
-- anyenv_rbenv_version: 2.1.2
-    - The rbenv version to install. Does not install when empty.
-- anyenv_rbenv_global_packages:
-    - bundler
-- anyenv_ndenv_version: v0.10.31
-    - The ndenv version to install. Does not install when empty.
-- anyenv_ndenv_global_packages: []
 
-- anyenv_npm_default_license: MIT
+- rbenv.version: 2.3.1
+    - The rbenv version to install. Does not install when empty.
+- rbenv.global_packages:
+    - bundler
+
+- ndenv.version: v6.3.0
+    - The ndenv version to install. Does not install when empty.
+- ndenv.global_packages: []
+
+- npm_default_license: MIT
+
+- pyenv.version: 3.5.2
+    - The pyenv version to install. Does not install when empty.
+- pyenv.global_packages:
+    - pip-tools
+    - neovim
 
 Dependencies
 ------------
 
-- hnakamur.oh-my-zsh
+- None
 
 Example Playbook
 ----------------
 
-    - hosts: servers
+    - hosts: localhost
       roles:
-         - { role: hnakamur.anyenv, anyenv_shell_rc_file: ~/.bashrc }
+         - { role: pyar6329.anyenv, anyenv_shell_rc_file: ~/.bashrc }
 
 License
 -------
