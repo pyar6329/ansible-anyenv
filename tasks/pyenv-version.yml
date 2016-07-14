@@ -1,15 +1,35 @@
-- homebrew: name={{ item }} state=latest
+- name: update apt cache
+  apt: update_cache=yes
+  become: yes
+
+- name: install build depends of pyenv
+  apt: pkg={{ item }} state=present install_recommends=no
   with_items:
-    - readline
-    - openssl
+    - make
+    - build-essential
+    - wget
+    - curl
+    - llvm
+    - xz-utils
+    - git
+    - libssl-dev
+    - zlib1g-dev
+    - libbz2-dev
+    - libreadline-dev
+    - libsqlite3-dev
+    - libncurses5-dev
+    - libncursesw5-dev
+  become: yes
 
 - include: >
-    env-version.yml anyenv_env_name=pyenv anyenv_env_version={{ pyenv.version }}
+    env-version.yml anyenv_env_name=pyenv anyenv_env_version={{ pyenv.version }} anyenv_env_language=python
 
-- pip: name={{ item }} state=present executable="{{ anyenv.install_dir }}/envs/pyenv/shims/pip"
+- name: install {{ item }} using pip
+  pip: name={{ item }} state=present executable="{{ anyenv.install_dir }}/envs/pyenv/shims/pip"
   register: anyenv_pip_installed
   with_items: pyenv.global_packages
 
-- shell: >
+- name: rehash pyenv
+  shell: >
     "{{ anyenv.install_dir | replace('~', '$HOME') }}/envs/pyenv/bin/pyenv" rehash
   when: anyenv_pip_installed|changed

@@ -1,16 +1,38 @@
-- homebrew: name={{ item }} state=latest
+- name: update apt cache
+  apt: update_cache=yes
+  become: yes
+
+- name: install build depends of rbenv
+  apt: pkg={{ item }} state=present install_recommends=no
   with_items:
-    - readline
-    - openssl
+    - build-essential
+    - git
+    - autoconf
+    - bison
+    - libcurl4-openssl-dev
+    - libffi-dev
+    - libreadline-dev
+    - libssl-dev
+    - libxml2-dev
+    - libxslt1-dev
+    - zlib1g-dev
+    - libyaml-dev
+    - libreadline6-dev
+    - libncurses5-dev
+    - libgdbm3
+    = libgdbm-dev
+  become: yes
 
 - include: >
-    env-version.yml anyenv_env_name=rbenv anyenv_env_version={{ rbenv.version }}
+    env-version.yml anyenv_env_name=rbenv anyenv_env_version={{ rbenv.version }} anyenv_env_language=ruby
 
 # NOTE: We must set user_install=no to install gems to the directory under rbenv.
-- gem: name={{ item }} state=latest user_install=no executable="{{ anyenv.install_dir }}/envs/rbenv/shims/gem"
+- name: install {{ item }} using gems
+  gem: name={{ item }} state=latest user_install=no executable="{{ anyenv.install_dir }}/envs/rbenv/shims/gem"
   register: anyenv_gem_installed
   with_items: rbenv.global_packages
 
-- shell: >
+- name: rehash rbenv
+  shell: >
     "{{ anyenv.install_dir | replace('~', '$HOME') }}/envs/rbenv/bin/rbenv" rehash
   when: anyenv_gem_installed|changed

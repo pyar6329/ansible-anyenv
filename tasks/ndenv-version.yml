@@ -1,12 +1,15 @@
 ---
-- include: env-version.yml anyenv_env_name=ndenv anyenv_env_version={{ ndenv.version }}
+- include: env-version.yml anyenv_env_name=ndenv anyenv_env_version={{ ndenv.version }} anyenv_env_language=node
 
-- npm: name={{ item }} global=yes executable={{ anyenv.install_dir }}/envs/ndenv/shims/npm
+- name: install {{ item }} using npm
+  npm: name={{ item }} global=yes executable={{ anyenv.install_dir }}/envs/ndenv/shims/npm
   register: anyenv_node_packages_installed
   with_items: ndenv.global_packages
 
-- shell: >
+- name: rehash ndenv
+  shell: >
     "{{ anyenv.install_dir | replace('~', '$HOME') }}/envs/ndenv/bin/ndenv" rehash
   when: anyenv_node_packages_installed|changed
 
-- lineinfile: dest=~/.npmrc state=present create=yes line="init.license={{ npm_default_license }}"
+- name: commit {{ npm_default_license }} to default license
+  lineinfile: dest=~/.npmrc state=present create=yes line="init.license={{ npm_default_license }}"
