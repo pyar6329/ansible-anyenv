@@ -1,0 +1,4 @@
+# anyenv
+# {{ ansible_managed }}
+export PATH="{{ anyenv.install_dir | replace('~', '${HOME}') }}/bin:$PATH"
+eval "$(anyenv init -)"

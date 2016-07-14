@@ -1,28 +1,32 @@
-- shell: >
+- name: install {{ anyenv_env_name }}
+  shell: >
     eval "$(anyenv init -)";
     anyenv install {{ anyenv_env_name }}
-    creates={{ anyenv_install_dir }}/envs/{{ anyenv_env_name }}
+    creates={{ anyenv.install_dir }}/envs/{{ anyenv_env_name }}
   environment:
-    PATH: "{{ anyenv_install_dir }}/bin:{{ lookup('env', 'PATH') }}"
+    PATH: "{{ anyenv.install_dir }}/bin:{{ lookup('env', 'PATH') }}"
 
-- shell: >
+- name: install {{ anyenv_env_language }} version {{ anyenv_env_version }}
+  shell: >
     eval "$(anyenv init -)";
     {{ anyenv_env_name }} install {{ anyenv_env_version }}
-    creates={{ anyenv_install_dir }}/envs/{{ anyenv_env_name }}/versions/{{ anyenv_env_version }}
+    creates={{ anyenv.install_dir }}/envs/{{ anyenv_env_name }}/versions/{{ anyenv_env_version }}
   environment:
-    PATH: "{{ anyenv_install_dir }}/bin:{{ lookup('env', 'PATH') }}"
+    PATH: "{{ anyenv.install_dir }}/bin:{{ lookup('env', 'PATH') }}"
 
-- shell: >
+- name: check global version
+  shell: >
     eval "$(anyenv init -)";
     {{ anyenv_env_name }} global
   register: anyenv_global_version
   changed_when: false
   environment:
-    PATH: "{{ anyenv_install_dir }}/bin:{{ lookup('env', 'PATH') }}"
+    PATH: "{{ anyenv.install_dir }}/bin:{{ lookup('env', 'PATH') }}"
 
-- shell: >
+- name: global version commit as {{ anyenv_env_version }}
+  shell: >
     eval "$(anyenv init -)";
     {{ anyenv_env_name }} global {{ anyenv_env_version }}
   when: anyenv_global_version.stdout != anyenv_env_version
   environment:
-    PATH: "{{ anyenv_install_dir }}/bin:{{ lookup('env', 'PATH') }}"
+    PATH: "{{ anyenv.install_dir }}/bin:{{ lookup('env', 'PATH') }}"

@@ -1,25 +1,30 @@
 ---
-# tasks file for hnakamur.anyenv
-- git: repo="{{ anyenv_git_url }}" dest="{{ anyenv_install_dir }}"
+- name: checkout anyenv_repo for system
+  git: repo="{{ anyenv.git_url }}" dest="{{ anyenv.install_dir }}"
 
-- template: src=anyenv.rc.j2 dest={{ zsh_custom_dir }}/anyenv.zsh
+- name: add anyenv initialization to profile system-wide
+  template: src=anyenv.sh.j2 dest=/etc/profile.d/anyenv.sh owner=root group=root mode=0755
+  become: yes
+  when:
+    - ansible_os_family != 'OpenBSD' and ansible_os_family != 'Darwin'
 
-- shell: >
+- name: eval anyenv environment
+  shell: >
     eval "$(anyenv init -)";
     anyenv install {{ item }}
-    creates={{ anyenv_install_dir }}/envs/{{ item }}
+    creates={{ anyenv.install_dir }}/envs/{{ item }}
   environment:
-    PATH: "{{ anyenv_install_dir }}/bin:{{ lookup('env', 'PATH') }}"
+    PATH: "{{ anyenv.install_dir }}/bin:{{ lookup('env', 'PATH') }}"
   with_items:
     - rbenv
     - ndenv
     - pyenv
 
 - include: rbenv-version.yml
-  when: anyenv_rbenv_version != ""
+  when: rbenv.version != ""
 
 - include: ndenv-version.yml
-  when: anyenv_ndenv_version != ""
+  when: ndenv.version != ""
 
 - include: pyenv-version.yml
-  when: anyenv_pyenv_version != ""
+  when: pyenv.version != ""
