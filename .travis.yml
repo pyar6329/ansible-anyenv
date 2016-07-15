@@ -2,8 +2,11 @@
 language: python
 python: "2.7"
 
-# Use the new container infrastructure
-sudo: false
+# Use the KVM infrastructure
+sudo: true
+
+# apt caching
+cache: apt
 
 # Install ansible
 addons:
@@ -19,11 +22,16 @@ install:
   - ansible --version
 
   # Create ansible.cfg with correct roles_path
-  - printf '[defaults]\nroles_path=../' >ansible.cfg
+  - printf '[defaults]\nroles_path=../\nhost_key_checking=false' > ansible.cfg
 
 script:
   # Basic role syntax check
   - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+  # playbook run check
+  # - ansible-playbook tests/test.yml -i tests/inventory --check -vvvv
+  # playbook run
+  - ansible-playbook tests/test.yml -i tests/inventory
+
 
 # notifications:
 #   webhooks: https://galaxy.ansible.com/api/v1/notifications/
