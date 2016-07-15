@@ -5,6 +5,9 @@ python: "2.7"
 # Use the KVM infrastructure
 sudo: true
 
+# apt caching
+cache: apt
+
 # Install ansible
 addons:
   apt:
@@ -25,7 +28,9 @@ script:
   # Basic role syntax check
   - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
   # playbook run check
-  - ansible-playbook tests/test.yml -i tests/inventory --check -vvvv
+  # - ansible-playbook tests/test.yml -i tests/inventory --check -vvvv
+  # playbook run
+  - ansible-playbook tests/test.yml -i tests/inventory -vvvv
  
 
 # notifications:
