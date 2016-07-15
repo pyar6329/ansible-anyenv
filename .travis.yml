@@ -28,10 +28,10 @@ script:
   # Basic role syntax check
   - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
   # playbook run check
-  - ansible-playbook tests/test.yml -i tests/inventory --check
+  - ansible-playbook tests/test.yml -i tests/inventory --check --vvvv
   # playbook run
-  - ansible-playbook tests/test.yml -i tests/inventory
- 
+  # - ansible-playbook tests/test.yml -i tests/inventory
+
 
 # notifications:
 #   webhooks: https://galaxy.ansible.com/api/v1/notifications/
