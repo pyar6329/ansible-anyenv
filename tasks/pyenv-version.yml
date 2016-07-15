@@ -22,7 +22,7 @@
   become: yes
 
 - include: >
-    env-version.yml anyenv_env_name=pyenv anyenv_env_version={{ pyenv.version }} anyenv_env_language=python
+    env-version.yml anyenv_env_name=pyenv anyenv_env_version={{ pyenv.version }} anyenv_env_language=python global_version={{ pyenv.global_version }}
 
 - name: "install {{ item }} using pip"
   pip: name={{ item }} state=present executable="{{ anyenv.install_dir }}/envs/pyenv/shims/pip"
