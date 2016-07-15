@@ -24,7 +24,7 @@
   become: yes
 
 - include: >
-    env-version.yml anyenv_env_name=rbenv anyenv_env_version={{ rbenv.version }} anyenv_env_language=ruby global_version={{ rbenv.global_version }}
+    env-version.yml anyenv_env_name=rbenv anyenv_env_version={{ rbenv.version }} anyenv_env_language=ruby global_version={{ rbenv.global_version[0] }}
 
 # NOTE: We must set user_install=no to install gems to the directory under rbenv.
 - name: "install {{ item }} using gems"
