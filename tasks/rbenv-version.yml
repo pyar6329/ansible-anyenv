@@ -20,7 +20,7 @@
     - libreadline6-dev
     - libncurses5-dev
     - libgdbm3
-    = libgdbm-dev
+    - libgdbm-dev
   become: yes
 
 - include: >
