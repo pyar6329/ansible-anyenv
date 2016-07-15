@@ -23,6 +23,7 @@
 - name: "global version commit as {{ anyenv_env_version }}"
   shell: >
     bash -lc "{{ anyenv_env_name }} global {{ anyenv_env_version }}"
-  when: anyenv_global_version[0].stdout != anyenv_env_version
+  # when: anyenv_global_version.stdout_lines.count("{{ anyenv_env_version }}") < 1  
+  when: "{{ anyenv_global_version.stdout }} != {{ anyenv_env_version }}"
   environment:
     PATH: "{{ anyenv.install_dir }}/bin:{{ lookup('env', 'PATH') }}"
