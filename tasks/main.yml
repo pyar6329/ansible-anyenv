@@ -10,8 +10,7 @@
 
 - name: eval anyenv environment
   shell: >
-    export PATH="{{ anyenv.install_dir | replace('~', '${HOME}') }}/bin:$PATH"
-    eval "$(anyenv init -)"
+    source /etc/profile
     anyenv install {{ item }}
     creates={{ anyenv.install_dir }}/envs/{{ item }}
   environment:
