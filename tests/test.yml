@@ -1,6 +1,6 @@
 ---
 - hosts: localhost
-  # connection: local
-  remote_user: root
+  connection: local
+  become: yes
   roles:
     - ansible-anyenv
