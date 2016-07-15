@@ -1,8 +1,8 @@
-- name: update apt cache
+- name: "update apt cache"
   apt: update_cache=yes
   become: yes
 
-- name: install build depends of pyenv
+- name: "install build depends of pyenv"
   apt: pkg={{ item }} state=present install_recommends=no
   with_items:
     - make
@@ -24,12 +24,12 @@
 - include: >
     env-version.yml anyenv_env_name=pyenv anyenv_env_version={{ pyenv.version }} anyenv_env_language=python
 
-- name: install {{ item }} using pip
+- name: "install {{ item }} using pip"
   pip: name={{ item }} state=present executable="{{ anyenv.install_dir }}/envs/pyenv/shims/pip"
   register: anyenv_pip_installed
   with_items: "{{ pyenv.global_packages }}"
 
-- name: rehash pyenv
+- name: "rehash pyenv"
   shell: >
     "{{ anyenv.install_dir | replace('~', '$HOME') }}/envs/pyenv/bin/pyenv" rehash
   when: anyenv_pip_installed|changed
