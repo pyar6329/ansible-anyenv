@@ -30,7 +30,7 @@
 - name: install {{ item }} using gems
   gem: name={{ item }} state=latest user_install=no executable="{{ anyenv.install_dir }}/envs/rbenv/shims/gem"
   register: anyenv_gem_installed
-  with_items: rbenv.global_packages
+  with_items: "{{ rbenv.global_packages }}"
 
 - name: rehash rbenv
   shell: >
