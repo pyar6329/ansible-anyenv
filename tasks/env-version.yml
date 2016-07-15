@@ -16,18 +16,17 @@
   shell: >
     bash -lc "{{ anyenv_env_name }} global"
   register: anyenv_global_version
-  always_run: yes
   changed_when: false
   environment:
     PATH: "{{ anyenv.install_dir }}/bin:{{ lookup('env', 'PATH') }}"
 
-- name: "debug result anyenv_global_version"
-  debug: var=anyenv_global_version
+# - name: "debug result anyenv_global_version"
+#   debug: var=anyenv_global_version
 
 - name: "global version commit as {{ anyenv_env_version }}"
   shell: >
     bash -lc "{{ anyenv_env_name }} global {{ global_version }}"
-  when: anyenv_global_version.stdout_lines.count("{{ global_version }}") < 1
-  # when: anyenv_global_version.stdout != global_version
+  # when: anyenv_global_version.stdout_lines.count("{{ global_version }}") < 1 | succeeded
+  when: anyenv_global_version.stdout != global_version | succeeded
   environment:
     PATH: "{{ anyenv.install_dir }}/bin:{{ lookup('env', 'PATH') }}"
