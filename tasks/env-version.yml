@@ -27,6 +27,6 @@
   shell: >
     bash -lc "{{ anyenv_env_name }} global {{ global_version }}"
   # when: anyenv_global_version.stdout_lines.count("{{ global_version }}") < 1 | succeeded
-  when: anyenv_global_version.stdout != global_version | succeeded
+  when: anyenv_global_version.stdout != global_version | success
   environment:
     PATH: "{{ anyenv.install_dir }}/bin:{{ lookup('env', 'PATH') }}"
