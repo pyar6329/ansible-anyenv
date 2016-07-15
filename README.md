@@ -1,6 +1,8 @@
 anyenv
 ======
 
+[![Build Status](https://travis-ci.org/pyar6329/ansible-anyenv.svg?branch=master)](https://travis-ci.org/pyar6329/ansible-anyenv)
+
 An Ansible role to install anyenv
 
 Requirements
