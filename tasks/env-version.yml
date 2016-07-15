@@ -1,18 +1,18 @@
-- name: install {{ anyenv_env_name }}
+- name: "install {{ anyenv_env_name }}"
   shell: >
     bash -lc "anyenv install {{ anyenv_env_name }}"
     creates={{ anyenv.install_dir }}/envs/{{ anyenv_env_name }}
   environment:
     PATH: "{{ anyenv.install_dir }}/bin:{{ lookup('env', 'PATH') }}"
 
-- name: install {{ anyenv_env_language }} version {{ anyenv_env_version }}
+- name: "install {{ anyenv_env_language }} version {{ anyenv_env_version }}"
   shell: >
     bash -lc "{{ anyenv_env_name }} install {{ anyenv_env_version }}"
     creates={{ anyenv.install_dir }}/envs/{{ anyenv_env_name }}/versions/{{ anyenv_env_version }}
   environment:
     PATH: "{{ anyenv.install_dir }}/bin:{{ lookup('env', 'PATH') }}"
 
-- name: check global version
+- name: "check global version"
   shell: >
     bash -lc "{{ anyenv_env_name }} global"
   register: anyenv_global_version
@@ -20,7 +20,7 @@
   environment:
     PATH: "{{ anyenv.install_dir }}/bin:{{ lookup('env', 'PATH') }}"
 
-- name: global version commit as {{ anyenv_env_version }}
+- name: "global version commit as {{ anyenv_env_version }}"
   shell: >
     bash -lc "{{ anyenv_env_name }} global {{ anyenv_env_version }}"
   when: anyenv_global_version.stdout != anyenv_env_version
