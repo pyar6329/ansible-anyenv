@@ -1,8 +1,8 @@
-- name: update apt cache
+- name: "update apt cache"
   apt: update_cache=yes
   become: yes
 
-- name: install build depends of rbenv
+- name: "install build depends of rbenv"
   apt: pkg={{ item }} state=present install_recommends=no
   with_items:
     - build-essential
@@ -27,12 +27,12 @@
     env-version.yml anyenv_env_name=rbenv anyenv_env_version={{ rbenv.version }} anyenv_env_language=ruby
 
 # NOTE: We must set user_install=no to install gems to the directory under rbenv.
-- name: install {{ item }} using gems
+- name: "install {{ item }} using gems"
   gem: name={{ item }} state=latest user_install=no executable="{{ anyenv.install_dir }}/envs/rbenv/shims/gem"
   register: anyenv_gem_installed
   with_items: "{{ rbenv.global_packages }}"
 
-- name: rehash rbenv
+- name: "rehash rbenv"
   shell: >
     "{{ anyenv.install_dir | replace('~', '$HOME') }}/envs/rbenv/bin/rbenv" rehash
   when: anyenv_gem_installed|changed
