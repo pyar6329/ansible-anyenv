@@ -20,6 +20,9 @@
   environment:
     PATH: "{{ anyenv.install_dir }}/bin:{{ lookup('env', 'PATH') }}"
 
+- name: "debug result anyenv_global_version"
+  debug: var=anyenv_global_version
+
 - name: "global version commit as {{ anyenv_env_version }}"
   shell: >
     bash -lc "{{ anyenv_env_name }} global {{ global_version }}"
