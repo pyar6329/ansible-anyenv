@@ -28,9 +28,9 @@ script:
   # Basic role syntax check
   - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
   # playbook run check
-  - ansible-playbook tests/test.yml -i tests/inventory --check -vvvv
+  # - ansible-playbook tests/test.yml -i tests/inventory --check -vvvv
   # playbook run
-  # - ansible-playbook tests/test.yml -i tests/inventory
+  - ansible-playbook tests/test.yml -i tests/inventory
 
 
 # notifications:
