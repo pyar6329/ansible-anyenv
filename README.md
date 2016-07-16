@@ -45,7 +45,7 @@ Example Playbook
 
     - hosts: localhost
       roles:
-         - { role: pyar6329.anyenv, anyenv_shell_rc_file: ~/.bashrc }
+         - { role: pyar6329.anyenv }
 
 License
 -------
