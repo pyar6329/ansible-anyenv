@@ -31,7 +31,6 @@ script:
   # - ansible-playbook tests/test.yml -i tests/inventory --check -vvvv
   # playbook run
   - ansible-playbook tests/test.yml -i tests/inventory -vvvv
- 
 
-# notifications:
-#   webhooks: https://galaxy.ansible.com/api/v1/notifications/
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
