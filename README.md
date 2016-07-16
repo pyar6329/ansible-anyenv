@@ -1,6 +1,8 @@
 anyenv
 ======
 
+[![Build Status](https://travis-ci.org/pyar6329/ansible-anyenv.svg?branch=master)](https://travis-ci.org/pyar6329/ansible-anyenv)
+
 An Ansible role to install anyenv
 
 Requirements
@@ -43,7 +45,7 @@ Example Playbook
 
     - hosts: localhost
       roles:
-         - { role: pyar6329.anyenv, anyenv_shell_rc_file: ~/.bashrc }
+         - { role: pyar6329.anyenv }
 
 License
 -------

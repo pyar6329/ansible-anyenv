@@ -20,14 +20,14 @@
     - libreadline6-dev
     - libncurses5-dev
     - libgdbm3
-    = libgdbm-dev
+    - libgdbm-dev
   become: yes
 
 - include: >
     env-version.yml anyenv_env_name=rbenv anyenv_env_version={{ rbenv.version }} anyenv_env_language=ruby
 
 # NOTE: We must set user_install=no to install gems to the directory under rbenv.
-- name: install {{ item }} using gems
+- name: install gem libraries
   gem: name={{ item }} state=latest user_install=no executable="{{ anyenv.install_dir }}/envs/rbenv/shims/gem"
   register: anyenv_gem_installed
   with_items: rbenv.global_packages
